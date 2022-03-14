@@ -36,7 +36,7 @@ bindsym $mod+Shift+Q kill
 # start program launcher
 # ln -s /usr/share/fonts/google-roboto/RobotoCondensed-Regular.ttf ~/.fonts
 #bindsym $mod+space exec /home/lzap/work/xlunch/xlunch -i /home/lzap/.config/xlunch/entries.dsv -f RobotoCondensed-Regular.ttf/10 -G
-bindsym $mod+space exec --no-startup-id dmenu_run
+bindsym $mod+D exec --no-startup-id dmenu_run
 
 # reload/restart/exit (confirmation does not work anymore)
 bindsym $mod+Shift+C reload
@@ -98,7 +98,7 @@ bindsym $mod+y floating toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-bindsym $mod+d focus child
+#bindsym $mod+d focus child
 
 # next/previous workspace
 bindsym Mod1+Tab focus left
