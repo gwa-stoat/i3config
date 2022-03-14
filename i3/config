@@ -1,0 +1,290 @@
+# Lukas Zapletal (lzap) i3 config file
+#
+# Please see https://i3wm.org/docs/user-contributed/lzap-config.html or
+# https://lukas.zapletalovi.com/2012/08/new-in-fedora-17-i3-42-tiling-wm.html
+
+# my main modifier key is Win
+set $mod Mod4
+
+# font for window titles. ISO 10646 = Unicode
+font pango:monospace 8
+
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# no mouse cursor "stealing" across workspaces
+#mouse_warping none
+
+# workaround for some my "dumb" apps
+#popup_during_fullscreen leave_fullscreen
+
+# clicking on links never steals focus
+#focus_on_window_activation urgent
+
+# start a terminal
+bindsym $mod+Return exec urxvt
+
+# kill focused window
+bindsym $mod+Shift+Q kill
+
+# start program launcher
+# ln -s /usr/share/fonts/google-roboto/RobotoCondensed-Regular.ttf ~/.fonts
+#bindsym $mod+space exec /home/lzap/work/xlunch/xlunch -i /home/lzap/.config/xlunch/entries.dsv -f RobotoCondensed-Regular.ttf/10 -G
+bindsym $mod+space exec --no-startup-id dmenu_run
+
+# reload/restart/exit (confirmation does not work anymore)
+bindsym $mod+Shift+C reload
+bindsym $mod+Shift+R restart
+bindsym $mod+Shift+E exit
+
+# # reload the configuration file
+# bindsym $mod+Shift+c reload
+# # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# bindsym $mod+Shift+r restart
+# # exit i3 (logs you out of your X session)
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+
+# screen locker (first move to "safe" workspace without any chat app)
+bindsym Control+Mod1+l exec i3-msg workspace 1 && i3lock -c 111111 -d
+bindsym Control+Mod1+s exec i3-msg workspace 1 && sleep 1 && xset dpms force standby
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# splitting
+bindsym $mod+v split vertical
+bindsym $mod+h split horizontal
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout
+bindsym $mod+s layout toggle stacking
+bindsym $mod+x layout toggle split
+bindsym $mod+t layout tabbed
+
+# toggle tiling / floating
+bindsym $mod+y floating toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+d focus child
+
+# next/previous workspace
+bindsym Mod1+Tab focus left
+bindsym Mod1+Shift+Tab focus right
+bindsym $mod+Tab focus down
+
+# change focus between tiling / floating windows
+bindsym $mod+Shift+Tab focus mode_toggle
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1:terms"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4:emacs"
+set $ws5 "5:www"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10:comms"
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+
+# border changing
+bindsym $mod+b border toggle
+
+# scratchpad
+bindsym $mod+m move scratchpad
+bindsym $mod+o scratchpad show
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+  # These bindings trigger as soon as you enter the resize mode
+
+         bindsym j resize shrink width 10 px or 10 ppt
+         bindsym k resize grow height 10 px or 10 ppt
+         bindsym l resize shrink height 10 px or 10 ppt
+         bindsym semicolon resize grow width 10 px or 10 ppt
+
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+
+}
+
+bindsym $mod+r mode "resize"
+
+# bindings for MUTE/UNMUTE
+#bindsym $mod+F11 exec /usr/bin/pactl set-source-mute alsa_input.usb-Logitech_Logitech_USB_Headset-00.analog-mono yes; exec /usr/bin/pactl play-sample mute
+#bindsym $mod+F12 exec /usr/bin/pactl set-source-mute alsa_input.usb-Logitech_Logitech_USB_Headset-00.analog-mono no; exec /usr/bin/pactl play-sample speak
+
+# bindings for ThinkPad keyboard
+# bindsym XF86AudioLowerVolume exec /usr/bin/pactl set-sink-volume 0 -20%; exec /usr/bin/pactl play-sample volume_blip; exec /usr/bin/killall -USR1 i3status
+# bindsym XF86AudioRaiseVolume exec /usr/bin/pactl set-sink-volume 0 +20%; exec /usr/bin/pactl play-sample volume_blip; exec /usr/bin/killall -USR1 i3status
+# bindsym XF86AudioMute exec /usr/bin/pactl set-sink-volume 0 0; exec /usr/bin/pactl play-sample volume_blip; exec /usr/bin/killall -USR1 i3status
+# bindsym XF86Launch1 exec /usr/bin/pactl play-sample that_was_easy
+# bindsym XF86MonBrightnessUp exec /usr/bin/xbacklight -inc 10
+# bindsym XF86MonBrightnessDown exec /usr/bin/xbacklight -dec 5
+
+# bindings for MS Natural Ergonomic Keyboard 4000
+# bindsym XF86HomePage exec /usr/bin/xdg-open "http://www.github.com"; workspace 5
+# bindsym XF86Search exec /usr/bin/xdg-open "http://www.google.com"; workspace 5
+# bindsym XF86Mail exec /usr/bin/xdg-email; workspace 5
+#bindsym XF86Launch5
+#bindsym XF86Launch6
+#bindsym XF86Launch7
+#bindsym XF86Launch8
+#bindsym XF86Launch9
+#bindsym XF86AudioMute
+#bindsym XF86AudioLowerVolume
+#bindsym XF86AudioRaiseVolume
+#bindsym XF86AudioPlay
+#bindsym XF86Favourites echo DOESNOTWORK
+#bindsym XF86Calculator exec /usr/bin/xcalc
+#bindsym XF86Calculator exec /usr/bin/xbacklight -set 100
+#bindsym Help
+#bindsym Undo
+#bindsym Redo
+#bindsym XF86New
+#bindsym SunOpen
+#bindsym XF86Close
+#bindsym XF86Reply
+#bindsym XF86MailForward
+#bindsym XF86Send
+#bindsym XF86Save
+#bindsym Print exec scrot -bs '/tmp/_SCREEN_%Y-%m-%d-%T_$wx$h.png'
+bindsym $mod+Print exec scrot -b '/tmp/_SCREEN_FULL_%Y-%m-%d-%T_$wx$h.png'
+
+# $mod+n reserved for close all notifications
+# see ~/.config/dunst/dunstrc for more
+
+# one bar on both screens
+bar {
+  position top
+  status_command i3status
+  tray_output HDMI-1
+}
+
+# workspace screens
+workspace 1 output HDMI-1
+workspace 2 output HDMI-1
+workspace 3 output HDMI-1
+workspace 4 output HDMI-1
+workspace 5 output HDMI-1
+workspace 6 output HDMI-2
+workspace 7 output HDMI-2
+workspace 8 output HDMI-2
+workspace 9 output HDMI-2
+workspace 10 output HDMI-2
+
+# workspace assignment (use "xprop")
+#assign [class="^firefox$"] 5
+#assign [class="^URxvt$" instance="^mail$"] 4
+#assign [class="^Xchat$"] 6
+#assign [title="^weechat"] 6
+#assign [class="^quaternion"] 6
+#assign [class="^[Hh]exchat"] 6
+#assign [class="^Steam$"] 7
+#assign [class="^Vide$"] 8
+#assign [class="^Decibel-audio-player.py$"] 7
+#assign [class="^telegram$"] 9
+#assign [title="Lingea Lexicon 5$"] 10
+#assign [title="^Stardict$"] 10
+#assign [class="^Sflphone$"] 10
+
+# custom window settings
+# for_window [class="^XCalc$"] floating enable
+# for_window [class="^Zeal$" instance="scratchpad"] move scratchpad
+# for_window [title="^Authy"] floating enable, border normal
+# for_window [class="^Google-chrome$"] border 1pixel
+# for_window [title="Lingea Lexicon 5$"] border none
+# for_window [class="^GVim$"] split v, layout stacking
+# for_window [class="^Zeal$"] floating enable
+# for_window [class="^Xsane$"] floating enable
+# for_window [class="^SFLphone"] floating enable
+# for_window [class="^TeamViewer.exe$"] floating enable
+# for_window [title="^TeamViewer$"] floating enable
+# for_window [title="^Computers & Contacts$"] floating enable
+# for_window [title="- TeamViewer -"] floating enable
+# for_window [title="^Počítače a kontakty$"] floating enable
+# for_window [class="^Steam$"] floating enable; border none
+# for_window [class="^feh$"] fullscreen
+# for_window [class="^Meld$"] fullscreen
+# for_window [class="^hl_linux$"] border none; fullscreen
+# for_window [class="^hl2_linux$"] border none; fullscreen
+# for_window [title="^Renoise"] border none; fullscreen
+# for_window [class="^Sflphone$"] floating enable
+# for_window [class="^Workrave$"] floating enable
+# for_window [class="^History buffer$"] border none; fullscreen
+# for_window [title="^Google+ Hangouts is sharing your screen"] floating enable
+
+# create scratchpad shell
+#exec -name scratchpad zeal
+
+# start the session
+exec --no-startup-id ~/.config/i3/autostart
+
